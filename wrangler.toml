@@ -1,0 +1,16 @@
+name = "moe-counter1"
+main = "dist/worker.js"
+compatibility_date = "2024-02-27"
+workers_dev = false
+
+[[routes]]
+pattern = "yanagishion.netlib.re"
+custom_domain = true
+
+[build]
+command = "npm run build"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "count"
+database_id = "85e22b69-9c6d-47d4-86bf-ea7fe49ca069"

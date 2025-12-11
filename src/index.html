@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Moe Counter - 萌萌访客计数器</title>
+    <meta name="description" content="个性化萌系访客计数器，多种主题一键生成">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff7eb9;
+            --secondary: #7afcff;
+            --accent: #ff65a3;
+            --background: #1a1a2e;
+            --card-bg: rgba(26, 26, 46, 0.95);
+            --text: #e6e6ff;
+            --shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .lead {
+            font-size: 1.2rem;
+            color: #a0a0d0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .usage-section {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .usage-card {
+            width: 100%;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .usage-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 126, 185, 0.3);
+        }
+
+        .usage-card h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.4rem;
+        }
+
+        .code-block {
+            background: #0f0f1f;
+            color: #f1f1ff;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 1rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+            margin: 1rem 0;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            line-height: 1.8;
+        }
+
+        .code-block::after {
+            content: "点击复制";
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .theme-preview-section {
+            margin: 3rem 0;
+        }
+
+        .theme-preview-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .theme-preview-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .theme-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 0.8rem;
+        }
+
+        .theme-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+        }
+
+        .theme-url {
+            background: #0f0f1f;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            word-break: break-all;
+            margin: 1rem 0;
+        }
+
+        .theme-example {
+            text-align: center;
+            padding: 1.5rem;
+            background: #0f0f1f;
+            border-radius: var(--radius);
+            min-height: 120px;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .generator-box {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            margin: 3rem 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .generator-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .generator-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        input, select {
+            flex: 1;
+            min-width: 250px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #0f0f1f;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        input:focus, select:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 126, 185, 0.2);
+        }
+
+        .live-preview {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #0f0f1f;
+            border-radius: var(--radius);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .live-preview-label {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            color: #1a1a2e;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            color: #a0a0d0;
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                padding: 0 2rem;
+            }
+            
+            .usage-card {
+                padding: 2.5rem;
+            }
+            
+            .code-block {
+                font-size: 1.1rem;
+                padding: 1.5rem;
+            }
+            
+            .input-group {
+                flex-wrap: nowrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .code-block {
+                font-size: 0.92rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-heart"></i> Moe Counter</h1>
+            <p class="lead">创建属于你的个性化萌系访客计数器，多种风格主题一键生成</p>
+        </header>
+
+        <div class="usage-section">
+            <div class="usage-card">
+                <h2><i class="fas fa-link"></i> SVG 地址</h2>
+                <div class="code-block" id="svgUrl"></div>
+            </div>
+            
+            <div class="usage-card">
+                <h2><i class="fas fa-code"></i> HTML 代码</h2>
+                <div class="code-block" id="htmlCode"></div>
+            </div>
+            
+            <div class="usage-card">
+                <h2><i class="fab fa-markdown"></i> Markdown 代码</h2>
+                <div class="code-block" id="markdownCode"></div>
+            </div>
+        </div>
+
+        <div class="theme-preview-section">
+            <h2 style="color: var(--primary); margin-bottom: 2rem; text-align: center;">
+                <i class="fas fa-palette"></i> 主题效果预览
+            </h2>
+            
+            <!-- 主题模板 -->
+            <template id="theme-template">
+                <div class="theme-preview-card">
+                    <div class="theme-header">
+                        <i class="icon-class"></i>
+                        <h3 class="theme-title"></h3>
+                    </div>
+                    <div class="theme-url"></div>
+                    <div class="theme-example">
+                        <img alt="主题预览" height="80" loading="lazy">
+                        <div class="error-message" style="display: none;"></div>
+                    </div>
+                </div>
+            </template>
+            <div id="themes-container"></div>
+        </div>
+
+        <div class="generator-box">
+            <div class="generator-header">
+                <h2><i class="fas fa-magic"></i> 生成你的计数器</h2>
+                <p>输入名称并选择主题，实时预览专属计数器</p>
+            </div>
+            
+            <div class="input-group">
+                <input type="text" id="counterName" placeholder="输入计数器名称 (例如: my-counter)" />
+                <select id="themeSelect"></select>
+            </div>
+            
+            <div class="code-block" id="generatedUrl"></div>
+            
+            <div class="live-preview">
+                <div class="live-preview-label">实时预览</div>
+                <img id="livePreview" alt="实时预览" height="100">
+            </div>
+        </div>
+
+        <footer>
+            <p>❤️ 基于 Cloudflare Workers 构建 | <a href="https://github.com/lxchapu/moe-counter" target="_blank" style="color: var(--secondary);">查看源代码</a></p>
+            <p style="margin-top: 1rem;">⚠️ 注意：所有数据公开可见，请勿输入敏感信息</p>
+        </footer>
+    </div>
+
+    <script>
+        // 配置数据
+        const THEMES = [
+            { id: 'asoul', name: 'A-SOUL 主题', icon: 'fas fa-star' },
+            { id: 'moebooru', name: 'Moebooru 主题', icon: 'fas fa-moon' },
+            { id: 'moebooru-h', name: 'Moebooru-Hentai 主题', icon: 'fas fa-eye-slash' },
+            { id: 'rule34', name: 'Rule34 主题 (NSFW)', icon: 'fas fa-exclamation-triangle' },
+            { id: 'gelbooru', name: 'Gelbooru 主题', icon: 'fas fa-paint-brush' },
+            { id: 'gelbooru-h', name: 'Gelbooru-Hentai 主题 (NSFW)', icon: 'fas fa-exclamation-circle' }
+        ];
+
+        // 核心功能
+        const MoeCounter = {
+            currentDomain: window.location.origin,
+            defaultName: 'your-counter-name',
+            
+            init() {
+                this.initBaseUrls();
+                this.renderThemeOptions();
+                this.renderThemePreviews();
+                this.initEventListeners();
+                this.generateCounter(); // 初始生成
+            },
+            
+            // 初始化基础URL
+            initBaseUrls() {
+                const baseUrl = `${this.currentDomain}/${this.defaultName}`;
+                document.getElementById('svgUrl').textContent = baseUrl;
+                document.getElementById('htmlCode').textContent = `<img src="${baseUrl}" alt="${this.defaultName}" />`;
+                document.getElementById('markdownCode').textContent = `![${this.defaultName}](${baseUrl})`;
+            },
+            
+            // 渲染主题选项
+            renderThemeOptions() {
+                const select = document.getElementById('themeSelect');
+                THEMES.forEach(theme => {
+                    const option = document.createElement('option');
+                    option.value = theme.id;
+                    option.textContent = theme.name;
+                    select.appendChild(option);
+                });
+            },
+            
+            // 渲染主题预览
+            renderThemePreviews() {
+                const container = document.getElementById('themes-container');
+                const template = document.getElementById('theme-template');
+                
+                THEMES.forEach(theme => {
+                    const clone = template.content.cloneNode(true);
+                    const themeUrl = `${this.currentDomain}/demo?theme=${theme.id}`;
+                    
+                    // 填充内容
+                    clone.querySelector('.icon-class').className = theme.icon;
+                    clone.querySelector('.theme-title').textContent = theme.name;
+                    clone.querySelector('.theme-url').textContent = themeUrl;
+                    
+                    const img = clone.querySelector('img');
+                    img.id = `${theme.id}Preview`;
+                    img.alt = `${theme.name}预览`;
+                    img.src = themeUrl;
+                    
+                    // 错误处理
+                    img.onerror = () => {
+                        const errorDiv = clone.querySelector('.error-message');
+                        errorDiv.style.display = 'block';
+                        errorDiv.textContent = '图片加载失败';
+                        img.style.display = 'none';
+                    };
+                    
+                    container.appendChild(clone);
+                });
+            },
+            
+            // 事件监听
+            initEventListeners() {
+                document.getElementById('themeSelect').addEventListener('change', () => this.generateCounter());
+                document.getElementById('counterName').addEventListener('input', () => this.generateCounter());
+                
+                // 复制功能
+                document.querySelectorAll('.code-block').forEach(block => {
+                    block.addEventListener('click', () => {
+                        const text = block.textContent;
+                        navigator.clipboard.writeText(text).then(() => {
+                            const originalText = block.textContent;
+                            block.textContent = '✅ 已复制到剪贴板！';
+                            setTimeout(() => {
+                                block.textContent = originalText;
+                            }, 1500);
+                        });
+                    });
+                });
+            },
+            
+            // 生成计数器
+            generateCounter() {
+                const name = document.getElementById('counterName').value.trim() || this.defaultName;
+                const theme = document.getElementById('themeSelect').value;
+                const counterUrl = `${this.currentDomain}/${encodeURIComponent(name)}?theme=${theme}`;
+                
+                // 更新显示
+                document.getElementById('generatedUrl').textContent = counterUrl;
+                document.getElementById('livePreview').src = counterUrl;
+            }
+        };
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            MoeCounter.init();
+        });
+    </script>
+</body>
+</html>
